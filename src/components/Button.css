@@ -1,0 +1,31 @@
+.botao {
+  border: none;
+  border-radius: 6px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.botao:active {
+  transform: translateY(1px);
+}
+
+.botao-primario {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.botao-primario:hover {
+  background-color: #1d4ed8;
+}
+
+.botao-secundario {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.botao-secundario:hover {
+  background-color: #d1d5db;
+}

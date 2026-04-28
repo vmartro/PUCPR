@@ -1,0 +1,45 @@
+.sobre-secao {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.sobre-secao h2 {
+  margin-top: 0;
+  color: #111827;
+  font-size: 1.2rem;
+}
+
+.sobre-secao p,
+.sobre-secao li {
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.sobre-secao ul {
+  padding-left: 1.2rem;
+}
+
+.sobre-secao code {
+  background-color: #f3f4f6;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #1f2937;
+}
+
+.sobre-arvore {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sobre-arvore li {
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.sobre-arvore li:last-child {
+  border-bottom: none;
+}

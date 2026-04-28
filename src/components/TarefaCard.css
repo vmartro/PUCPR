@@ -1,0 +1,57 @@
+.tarefa-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.15s ease;
+}
+
+.tarefa-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tarefa-card-concluida {
+  border-left-color: #16a34a;
+  opacity: 0.85;
+}
+
+.tarefa-card-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.tarefa-card-titulo {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #111827;
+}
+
+.tarefa-card-concluida .tarefa-card-titulo {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.tarefa-card-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.tarefa-card-descricao {
+  margin: 0.5rem 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.tarefa-card-prazo {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+}

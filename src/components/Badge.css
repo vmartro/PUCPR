@@ -1,0 +1,34 @@
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-alta {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-media {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.badge-baixa {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.badge-concluida {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-pendente {
+  background-color: #f3f4f6;
+  color: #374151;
+}
