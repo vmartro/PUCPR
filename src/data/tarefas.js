@@ -19,8 +19,8 @@ const tarefas = [
     id: 3,
     titulo: 'Criar layout compartilhado',
     descricao: 'Implementar Navbar e Footer reutilizáveis em todas as páginas.',
-    prioridade: 'media',
-    concluida: true,
+    prioridade: 'alta',
+    concluida: false,
     prazo: '2026-04-27',
   },
   {
