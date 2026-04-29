@@ -6,7 +6,7 @@ const INTEGRANTES = [
   {
     nome: 'Matheus Vicente Martins Castro',
     papel: 'Desenvolvimento e organização do projeto',
-    email: 'matheusvicentemartinscastro@gmail.com',
+    email: 'matheus.castro@pucpr.edu.br',
   },
   {
     nome: 'Henrique Fugikawa Abe',
