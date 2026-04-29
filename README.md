@@ -82,6 +82,8 @@ Documentadas em detalhe na página **Sobre** da aplicação. Resumo:
 ## Equipe
 
 - Matheus Vicente Martins Castro
+- Henrique Fugikawa Abe
+- Erich Augusto Natal da Silva
 
 ## Disciplina
 
