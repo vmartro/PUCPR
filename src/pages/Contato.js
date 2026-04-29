@@ -8,6 +8,16 @@ const INTEGRANTES = [
     papel: 'Desenvolvimento e organização do projeto',
     email: 'matheusvicentemartinscastro@gmail.com',
   },
+  {
+    nome: 'Henrique Fugikawa Abe',
+    papel: 'Desenvolvimento e organização do projeto',
+    email: 'henrique.fugikawa@pucpr.edu.br',
+  },
+  {
+    nome: 'Erich Natal Augusto da Silva',
+    papel: 'Desenvolvimento e organização do projeto',
+    email: 'erich.augusto@pucpr.edu.br',
+  },
 ];
 
 function Contato() {

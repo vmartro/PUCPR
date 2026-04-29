@@ -10,7 +10,7 @@ const LINKS_NAVEGACAO = [
   { to: '/contato', label: 'Contato' },
 ];
 
-const AUTORES = ['Matheus Vicente Martins Castro'];
+const AUTORES = ['Matheus Vicente Martins Castro', 'Henrique Fugikawa Abe', 'Erich Augusto Natal da Silva'];
 
 function MainLayout() {
   return (
