@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
 import './Contato.css';
@@ -21,8 +22,13 @@ const INTEGRANTES = [
 ];
 
 function Contato() {
+  const [contadorEmails, setContadorEmails] = useState(0);
+
   function handleEnviar(evento) {
     evento.preventDefault();
+    
+    setContadorEmails(contadorEmails + 1);
+    
     alert('Funcionalidade de envio será implementada nas próximas entregas.');
   }
 
@@ -65,6 +71,11 @@ function Contato() {
             <Button tipo="submit" variante="primario">
               Enviar
             </Button>
+            
+            <span style={{ display: 'block', marginTop: '15px', fontWeight: 'bold' }}>
+              E-mails enviados: {contadorEmails}
+            </span>
+            
           </form>
         </div>
       </div>
