@@ -72,9 +72,9 @@ function Contato() {
               Enviar
             </Button>
             
-            <span style={{ display: 'block', marginTop: '15px', fontWeight: 'bold' }}>
+            <p style={{ display: 'block', marginTop: '15px', fontWeight: 'bold' }}>
               E-mails enviados: {contadorEmails}
-            </span>
+            </p>
             
           </form>
         </div>
