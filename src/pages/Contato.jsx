@@ -1,5 +1,3 @@
-// src/pages/Contato.js
-
 import { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
@@ -25,10 +23,10 @@ const INTEGRANTES = [
 ];
 
 function Contato() {
-  // Estados de controle do formulário e interface
   const [formData, setFormData] = useState({ nome: '', email: '', mensagem: '' });
-  const [status, setStatus] = useState("ocioso"); // 'ocioso', 'carregando', 'sucesso'
+  const [status, setStatus] = useState("ocioso");
   const [erro, setErro] = useState("");
+  const [dadosEnviados, setDadosEnviados] = useState(null);
 
   // Atualiza o estado a cada tecla digitada
   function handleChange(e) {
@@ -45,9 +43,13 @@ function Contato() {
     try {
       // Envia para o Service validar e simular requisição
       await enviarMensagem(formData);
+      
+      // SALVA O RECIBO: Copia os dados atuais para o estado de recibo
+      setDadosEnviados(formData); 
+      
       setStatus("sucesso");
     } catch (err) {
-      setErro(err.message); // Captura o erro do Service e joga na tela
+      setErro(err.message);
       setStatus("ocioso");
     }
   }
@@ -56,6 +58,7 @@ function Contato() {
     setFormData({ nome: '', email: '', mensagem: '' });
     setStatus("ocioso");
     setErro("");
+    setDadosEnviados(null); 
   }
 
   return (
@@ -82,7 +85,7 @@ function Contato() {
           {status === "sucesso" ? (
             <div style={{ textAlign: 'center', padding: '1rem' }}>
               <h3 style={{ color: 'green', marginBottom: '1rem' }}>Mensagem enviada com sucesso!</h3>
-              <p>Obrigado pelo contato, {formData.nome}.</p>
+              <p>Obrigado pelo contato, {dadosEnviados?.nome}.</p>
               <Button onClick={handleReset} variante="secundario" tipo="button" style={{ marginTop: '1rem' }}>
                 Enviar outra mensagem
               </Button>
@@ -112,6 +115,29 @@ function Contato() {
           )}
         </div>
       </div>
+
+      {/* Exibição da mensagem enviada (O Recibo) */}
+      {dadosEnviados && (
+        <div style={{
+          marginTop: '30px',
+          padding: '20px',
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: '8px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        }}>
+          <h3 style={{ marginTop: 0, color: '#198754' }}>✅ Mensagem Registrada</h3>
+          <p><strong>Nome:</strong> {dadosEnviados.nome}</p>
+          <p><strong>E-mail:</strong> {dadosEnviados.email}</p>
+          
+          <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #ccc' }}>
+            <strong>Conteúdo da mensagem:</strong>
+            <p style={{ whiteSpace: 'pre-wrap', color: '#555', marginTop: '5px', backgroundColor: '#fff', padding: '10px', borderRadius: '4px', border: '1px dashed #ccc' }}>
+              {dadosEnviados.mensagem}
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
