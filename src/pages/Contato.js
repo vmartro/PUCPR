@@ -1,6 +1,9 @@
+// src/pages/Contato.js
+
 import { useState } from 'react';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
+import { enviarMensagem } from '../services/contatoServices';
 import './Contato.css';
 
 const INTEGRANTES = [
@@ -22,22 +25,42 @@ const INTEGRANTES = [
 ];
 
 function Contato() {
-  const [contadorEmails, setContadorEmails] = useState(0);
+  // Estados de controle do formulário e interface
+  const [formData, setFormData] = useState({ nome: '', email: '', mensagem: '' });
+  const [status, setStatus] = useState("ocioso"); // 'ocioso', 'carregando', 'sucesso'
+  const [erro, setErro] = useState("");
 
-  function handleEnviar(evento) {
-    evento.preventDefault();
-    
-    setContadorEmails(contadorEmails + 1);
-    
-    alert('Funcionalidade de envio será implementada nas próximas entregas.');
+  // Atualiza o estado a cada tecla digitada
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }
+
+  // Intercepta o clique de enviar
+  async function handleEnviar(evento) {
+    evento.preventDefault(); // Impede a página de recarregar
+    setErro("");
+    setStatus("carregando");
+
+    try {
+      // Envia para o Service validar e simular requisição
+      await enviarMensagem(formData);
+      setStatus("sucesso");
+    } catch (err) {
+      setErro(err.message); // Captura o erro do Service e joga na tela
+      setStatus("ocioso");
+    }
+  }
+
+  function handleReset() {
+    setFormData({ nome: '', email: '', mensagem: '' });
+    setStatus("ocioso");
+    setErro("");
   }
 
   return (
     <section>
-      <PageTitle
-        titulo="Contato"
-        subtitulo="Fale com a equipe responsável pelo projeto"
-      />
+      <PageTitle titulo="Contato" subtitulo="Fale com a equipe responsável pelo projeto" />
 
       <div className="contato-grade">
         <div className="contato-card">
@@ -55,28 +78,38 @@ function Contato() {
 
         <div className="contato-card">
           <h2>Envie uma mensagem</h2>
-          <form className="contato-formulario" onSubmit={handleEnviar}>
-            <label>
-              Nome
-              <input type="text" name="nome" required />
-            </label>
-            <label>
-              E-mail
-              <input type="email" name="email" required />
-            </label>
-            <label>
-              Mensagem
-              <textarea name="mensagem" rows="4" required />
-            </label>
-            <Button tipo="submit" variante="primario">
-              Enviar
-            </Button>
-            
-            <p style={{ display: 'block', marginTop: '15px', fontWeight: 'bold' }}>
-              E-mails enviados: {contadorEmails}
-            </p>
-            
-          </form>
+          
+          {status === "sucesso" ? (
+            <div style={{ textAlign: 'center', padding: '1rem' }}>
+              <h3 style={{ color: 'green', marginBottom: '1rem' }}>Mensagem enviada com sucesso!</h3>
+              <p>Obrigado pelo contato, {formData.nome}.</p>
+              <Button onClick={handleReset} variante="secundario" tipo="button" style={{ marginTop: '1rem' }}>
+                Enviar outra mensagem
+              </Button>
+            </div>
+          ) : (
+            <form className="contato-formulario" onSubmit={handleEnviar}>
+              {/* Exibe o erro vindo do Service, se existir */}
+              {erro && <p style={{ color: "red", fontWeight: "bold", fontSize: "0.9rem" }}>Erro: {erro}</p>}
+              
+              <label>
+                Nome
+                <input type="text" name="nome" value={formData.nome} onChange={handleChange} />
+              </label>
+              <label>
+                E-mail
+                <input type="email" name="email" value={formData.email} onChange={handleChange} />
+              </label>
+              <label>
+                Mensagem
+                <textarea name="mensagem" rows="4" value={formData.mensagem} onChange={handleChange} />
+              </label>
+              
+              <Button tipo="submit" variante="primario" disabled={status === "carregando"}>
+                {status === "carregando" ? "Enviando..." : "Enviar"}
+              </Button>
+            </form>
+          )}
         </div>
       </div>
     </section>

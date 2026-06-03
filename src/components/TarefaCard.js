@@ -1,13 +1,16 @@
+// src/components/TarefaCard.js
 import PropTypes from 'prop-types';
 import Badge from './Badge';
+import Button from './Button';
 import './TarefaCard.css';
 
 function formatarData(iso) {
+  if (!iso) return '';
   const [ano, mes, dia] = iso.split('-');
   return `${dia}/${mes}/${ano}`;
 }
 
-function TarefaCard({ titulo, descricao, prioridade, concluida, prazo }) {
+function TarefaCard({ id, titulo, descricao, prioridade, concluida, prazo, onEdit, onDelete }) {
   return (
     <article className={`tarefa-card ${concluida ? 'tarefa-card-concluida' : ''}`}>
       <header className="tarefa-card-cabecalho">
@@ -21,16 +24,29 @@ function TarefaCard({ titulo, descricao, prioridade, concluida, prazo }) {
       </header>
       <p className="tarefa-card-descricao">{descricao}</p>
       <p className="tarefa-card-prazo">Prazo: {formatarData(prazo)}</p>
+      
+      {/* Nova área de botões do CRUD */}
+      <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+        <Button variante="secundario" onClick={() => onEdit(id)}>
+          ✏️ Editar
+        </Button>
+        <Button variante="secundario" onClick={() => onDelete(id)}>
+          🗑️ Apagar
+        </Button>
+      </div>
     </article>
   );
 }
 
 TarefaCard.propTypes = {
+  id: PropTypes.number.isRequired,
   titulo: PropTypes.string.isRequired,
   descricao: PropTypes.string.isRequired,
   prioridade: PropTypes.oneOf(['alta', 'media', 'baixa']).isRequired,
   concluida: PropTypes.bool.isRequired,
   prazo: PropTypes.string.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default TarefaCard;
