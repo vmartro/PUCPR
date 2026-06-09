@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Tarefas from './pages/Tarefas';
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
+import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
 import './App.css';
 
 function App() {
@@ -12,9 +14,31 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="tarefas" element={<Tarefas />} />
+          
+          {/* Rota protegida de Tarefas */}
+          <Route 
+            path="tarefas"
+            element={
+              <PrivateRoute>
+                <Tarefas />
+              </PrivateRoute>
+            } 
+          />
+          
+          {/* Rota protegida de Contato */}
+          <Route 
+            path="contato" 
+            element={
+              <PrivateRoute>
+                <Contato />
+              </PrivateRoute>
+            } 
+          />
+          
           <Route path="sobre" element={<Sobre />} />
-          <Route path="contato" element={<Contato />} />
+          <Route path="login" element={<Login />} />
+          
+          {/* Rota de fallback: Qualquer URL não mapeada joga o usuário para a Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
