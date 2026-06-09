@@ -79,5 +79,5 @@ app.post("/login", async (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("API 1 (Autenticação/Login) rodando na porta 3001 (Sem BCrypt)");
+  console.log("API 1 (Autenticação/Login) rodando na porta 3001");
 });

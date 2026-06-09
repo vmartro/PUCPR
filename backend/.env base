@@ -1,0 +1,8 @@
+# Configurações do Banco de Dados
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=sua senha
+DB_NAME=app_tarefas
+
+# Segredo de Segurança das APIs
+JWT_SECRET=segredo_jwt
