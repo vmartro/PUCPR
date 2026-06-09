@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS app_tarefas;
+USE app_tarefas;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL -- Aqui guardaremos a senha criptografada (bcrypt)
+);
+
+CREATE TABLE tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL,
+    prazo DATE NOT NULL,
+    prioridade ENUM('alta', 'media', 'baixa') DEFAULT 'media',
+    concluida BOOLEAN DEFAULT FALSE,
+    usuario_id INT NOT NULL, -- Chave Estrangeira (FK)
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE contatos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
