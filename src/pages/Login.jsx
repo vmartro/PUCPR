@@ -8,42 +8,37 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   async function fazerLogin() {
-  try {
+    try {
+      const resposta = await fetch("http://localhost:3001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          senha
+        })
+      });
 
-    const resposta = await fetch("http://localhost:3001/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        senha
-      })
-    });
+      const dados = await resposta.json();
 
-    const dados = await resposta.json();
+      console.log(dados);
 
-    console.log(dados);
+      if (!resposta.ok) {
+        alert(dados.erro);
+        localStorage.removeItem("token");
+        return;
+      }
 
-    if (!resposta.ok) {
+      localStorage.setItem("token", dados.token);
 
-      alert(dados.erro);
+      // Redireciona após o login dar certo
+      navigate("/usuarios"); 
 
-      localStorage.removeItem("token");
-
-      return;
+    } catch (erro) {
+      console.log(erro);
     }
-
-    localStorage.setItem("token", dados.token);
-
-    navigate("/usuarios");
-
-  } catch (erro) {
-
-    console.log(erro);
-
   }
-}
 
   return (
     <div>
@@ -64,8 +59,15 @@ export default function LoginPage() {
       <button onClick={fazerLogin}>
         Entrar
       </button>
+
+      {/* --- BOTÃO DE CADASTRO ADICIONADO AQUI --- */}
+      <br />
+      <br />
+      <button onClick={() => navigate("/cadastro")}>
+        Não tem uma conta? Cadastre-se
+      </button>
+      {/* ---------------------------------------- */}
+
     </div>
   );
 }
-
-

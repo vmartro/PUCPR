@@ -6,6 +6,7 @@ import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
+import Cadastro from './pages/Cadastro';
 import './App.css';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           
           <Route path="sobre" element={<Sobre />} />
           <Route path="login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
           
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

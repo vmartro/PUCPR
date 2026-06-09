@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-
-// Importa a conexão com o banco de dados que acabamos de criar!
 const db = require("./db"); 
 
 const app = express();
@@ -11,29 +9,60 @@ app.use(express.json());
 
 const SECRET = "segredo_jwt"; 
 
+// [CREATE] Rota para cadastrar novos usuários (Sem Criptografia)
+app.post("/cadastro", async (req, res) => {
+  const { email, senha } = req.body;
+
+  try {
+    const [usuariosExistentes] = await db.execute(
+      "SELECT id FROM usuarios WHERE email = ?", 
+      [email]
+    );
+
+    if (usuariosExistentes.length > 0) {
+      return res.status(400).json({ erro: "Este e-mail já está em uso." });
+    }
+
+    // Salva o usuário no MySQL com a senha em texto puro
+    await db.execute(
+      "INSERT INTO usuarios (email, senha) VALUES (?, ?)",
+      [email, senha]
+    );
+
+    res.status(201).json({ 
+      sucesso: true, 
+      mensagem: "Usuário cadastrado com sucesso! Você já pode fazer o login." 
+    });
+
+  } catch (erro) {
+    console.error("Erro no cadastro:", erro);
+    res.status(500).json({ erro: "Erro ao cadastrar usuário." });
+  }
+});
+
+
+// [READ] Rota de Login (Comparação Simples)
 app.post("/login", async (req, res) => {
   const { email, senha } = req.body;
 
   try {
-    // 1. Vai no banco e busca o usuário com esse email
     const [linhas] = await db.execute(
       "SELECT * FROM usuarios WHERE email = ?", 
       [email]
     );
 
-    // 2. Se a lista estiver vazia, o email não existe
     if (linhas.length === 0) {
-      return res.status(401).json({ erro: "E-mail não encontrado." });
+      return res.status(401).json({ erro: "E-mail ou senha incorretos." });
     }
 
     const usuarioDoBanco = linhas[0];
 
-    // 3. Compara a senha do banco com a senha digitada no React
+    // Compara a senha digitada no React diretamente com a do banco
     if (senha !== usuarioDoBanco.senha) {
-      return res.status(401).json({ erro: "Senha incorreta." });
+      return res.status(401).json({ erro: "E-mail ou senha incorretos." });
     }
 
-    // 4. Se tudo deu certo, gera o token incluindo o ID real do banco!
+    // Se a senha bater, gera o token
     const token = jwt.sign(
       { id: usuarioDoBanco.id, email: usuarioDoBanco.email }, 
       SECRET, 
@@ -43,11 +72,11 @@ app.post("/login", async (req, res) => {
     res.json({ token });
 
   } catch (erro) {
-    console.error("Erro ao acessar o banco de dados:", erro);
+    console.error("Erro no login:", erro);
     res.status(500).json({ erro: "Erro interno no servidor." });
   }
 });
 
 app.listen(3001, () => {
-  console.log("API 1 (Autenticação/Login) conectada ao MySQL rodando na porta 3001");
+  console.log("API 1 (Autenticação/Login) rodando na porta 3001 (Sem BCrypt)");
 });

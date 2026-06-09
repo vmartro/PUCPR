@@ -6,10 +6,13 @@ import './TarefaCard.css';
 
 function formatarData(iso) {
   if (!iso) return '';
-  const [ano, mes, dia] = iso.split('-');
+  
+  const dataLimpa = iso.split('T')[0];
+  
+  const [ano, mes, dia] = dataLimpa.split('-');
+  
   return `${dia}/${mes}/${ano}`;
 }
-
 function TarefaCard({ id, titulo, descricao, prioridade, concluida, prazo, onEdit, onDelete }) {
   return (
     <article className={`tarefa-card ${concluida ? 'tarefa-card-concluida' : ''}`}>

@@ -103,7 +103,7 @@ function Tarefas() {
           
           <input className="form-input" type="text" name="titulo" placeholder="Título da tarefa" value={form.titulo} onChange={handleChange} required />
           <input className="form-input" type="text" name="descricao" placeholder="Descrição detalhada da tarefa..." value={form.descricao} onChange={handleChange} required />
-          <input className="form-input" type="date" name="prazo" value={form.prazo} onChange={handleChange} required />
+          <input className="form-input" type="date" name="prazo" value={formataDataInput(form.prazo)} onChange={handleChange} required />
           
           <select className="form-select" name="prioridade" value={form.prioridade} onChange={handleChange}>
             <option value="alta">Prioridade: Alta</option>
@@ -166,5 +166,15 @@ function Tarefas() {
     </section>
   );
 }
+
+const formataDataInput = (dataBruta) => {
+  if (!dataBruta) return '';
+  
+  const data = new Date(dataBruta);
+  
+  if (isNaN(data.getTime())) return ''; 
+  
+  return data.toISOString().substring(0, 10);
+};
 
 export default Tarefas;
