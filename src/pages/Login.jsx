@@ -25,7 +25,6 @@ export default function LoginPage() {
 
     console.log(dados);
 
-    // LOGIN INVÁLIDO
     if (!resposta.ok) {
 
       alert(dados.erro);
@@ -35,7 +34,6 @@ export default function LoginPage() {
       return;
     }
 
-    // LOGIN VÁLIDO
     localStorage.setItem("token", dados.token);
 
     navigate("/usuarios");

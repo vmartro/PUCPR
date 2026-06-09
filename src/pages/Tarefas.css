@@ -74,20 +74,17 @@
   margin-top: 10px;
 }
 
-/* =========================================
-   Modal (Pop-up) de Confirmação de Exclusão
-   ========================================= */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro transparente */
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Garante que fique por cima de tudo */
+  z-index: 1000; 
 }
 
 .modal-content {
@@ -108,7 +105,7 @@
 
 .modal-content h3 {
   margin-top: 0;
-  color: #dc3545; /* Vermelho de alerta */
+  color: #dc3545;
   font-size: 1.5rem;
 }
 
@@ -124,7 +121,6 @@
   gap: 15px;
 }
 
-/* Botão de apagar vermelho no modal */
 .btn-apagar-confirmar {
   background-color: #dc3545;
   color: white;

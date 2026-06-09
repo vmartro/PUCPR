@@ -1,16 +1,13 @@
-// Configuração central da URL do seu backend local
-const API_URL = "http://localhost:3001/api/tarefas";
+const API_URL = "http://localhost:3003/api/tarefas";
 
-// Função para pegar o token e montar o cabeçalho
 const getHeaders = () => {
   const token = localStorage.getItem("token");
   return {
     "Content-Type": "application/json; charset=UTF-8",
-    "authorization": token // Envia a chave de segurança
+    "authorization": token 
   };
 };
 
-// Função para forçar o logout se o token for inválido
 const tratarErroAutenticacao = (status) => {
   if (status === 401 || status === 403) {
     localStorage.removeItem("token");
@@ -28,7 +25,6 @@ export async function buscarTarefas() {
 
     tratarErroAutenticacao(resposta.status);
     
-    // Agora assumimos que o seu backend vai devolver os dados no formato correto
     const dados = await resposta.json();
     return dados;
   } catch (erro) {
@@ -37,7 +33,6 @@ export async function buscarTarefas() {
   }
 }
 
-// [CREATE] Criar nova
 export async function criarTarefa(novaTarefa) {
   try {
     const resposta = await fetch(API_URL, {
@@ -55,7 +50,6 @@ export async function criarTarefa(novaTarefa) {
   }
 }
 
-// [UPDATE] Atualizar existente
 export async function atualizarTarefa(id, tarefaAtualizada) {
   try {
     const resposta = await fetch(`${API_URL}/${id}`, {
@@ -72,7 +66,6 @@ export async function atualizarTarefa(id, tarefaAtualizada) {
   }
 }
 
-// [DELETE] Excluir
 export async function excluirTarefa(id) {
   try {
     const resposta = await fetch(`${API_URL}/${id}`, { 

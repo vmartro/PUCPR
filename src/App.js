@@ -15,7 +15,6 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           
-          {/* Rota protegida de Tarefas */}
           <Route 
             path="tarefas"
             element={
@@ -25,7 +24,6 @@ function App() {
             } 
           />
           
-          {/* Rota protegida de Contato */}
           <Route 
             path="contato" 
             element={
@@ -38,7 +36,6 @@ function App() {
           <Route path="sobre" element={<Sobre />} />
           <Route path="login" element={<Login />} />
           
-          {/* Rota de fallback: Qualquer URL não mapeada joga o usuário para a Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

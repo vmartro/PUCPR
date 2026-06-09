@@ -7,19 +7,15 @@ const AUTORES = ['Matheus Vicente Martins Castro', 'Henrique Fugikawa Abe', 'Eri
 
 function MainLayout() {
   const navigate = useNavigate();
-  
-  // Verifica se o usuário está logado buscando o token
+
   const token = localStorage.getItem("token");
 
   const fazerLogout = () => {
-    // 1. Remove o token do armazenamento do navegador
     localStorage.removeItem("token");
     
-    // 2. Redireciona o usuário para a tela de Login
     navigate("/login");
   };
 
-  // Movemos os links para dentro do componente para podermos alterá-los dinamicamente
   const linksNavegacao = [
     { to: '/', label: 'Início' },
     { to: '/tarefas', label: 'Tarefas' },
@@ -27,7 +23,6 @@ function MainLayout() {
     { to: '/contato', label: 'Contato' }
   ];
 
-  // Se NÃO tiver token, adicionamos o link de Login na barra
   if (!token) {
     linksNavegacao.push({ to: '/login', label: 'Login' });
   }
@@ -36,7 +31,6 @@ function MainLayout() {
     <div className="layout">
       <Navbar titulo="Lista de Tarefas" links={linksNavegacao} />
       
-      {/* Se o usuário ESTIVER logado (tiver token), exibe o botão de Sair */}
       {token && (
         <div style={{ textAlign: "right", padding: "10px 20px" }}>
           <button 
@@ -44,14 +38,14 @@ function MainLayout() {
             style={{ 
               cursor: "pointer", 
               color: "white", 
-              backgroundColor: "#d9534f", // Um vermelho mais suave
+              backgroundColor: "#d9534f",
               padding: "8px 16px", 
               border: "none", 
               borderRadius: "4px",
               fontWeight: "bold"
             }}
           >
-            Sair do Sistema
+            Sair
           </button>
         </div>
       )}
