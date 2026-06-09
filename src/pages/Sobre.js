@@ -26,11 +26,17 @@ function Sobre() {
         <h2>Decisões técnicas</h2>
         <ul>
           <li>
-            <strong>ArquArquitetura de Microsserviços:</strong> o backend foi 
+            <strong>Arquitetura de Microsserviços:</strong> o backend foi 
             dividido em três APIs independentes (Autenticação, Contatos e Tarefas), 
             rodando em portas distintas. Isso garante maior escalabilidade, 
             separação de responsabilidades e resiliência ao sistema (se o serviço 
             de contatos falhar, o de tarefas continua operante).
+          </li>
+          <li>
+            <strong>Segurança e Variáveis de Ambiente (.env):</strong> credenciais 
+            de banco de dados e chaves secretas de criptografia (JWT) foram rigorosamente 
+            isoladas em arquivos de ambiente locais. Isso garante que nenhum 
+            dado sensível vaze para o repositório de código-fonte.
           </li>
           <li>
             <strong>Segurança com JWT (JSON Web Tokens):</strong> implementação 
@@ -75,7 +81,8 @@ function Sobre() {
         <ul className="sobre-arvore">
           <li>
             <code>backend/</code> — <strong>(Novo)</strong> abriga os servidores Node.js/Express 
-            independentes para Autenticação, Contatos e Tarefas.
+            independentes para Autenticação, Contatos e Tarefas, além do banco de dados e das 
+            configurações seguras de ambiente (<code>.env</code>).
           </li>
           <li>
             <code>src/components/</code> — peças de UI reutilizáveis sem

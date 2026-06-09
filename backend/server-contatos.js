@@ -1,13 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const db = require("./db"); // Importa a conexão com o MySQL
+const db = require("./db"); // Importa a conexão com o MySQL`
+require("dotenv").config()
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const SECRET = "segredo_jwt"; 
+const SECRET = process.env.JWT_SECRET;
 
 const verificarToken = (req, res, next) => {
   const token = req.headers["authorization"];

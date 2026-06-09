@@ -2,12 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const db = require("./db"); 
-
 const app = express();
+require("dotenv").config()
+
 app.use(cors());
 app.use(express.json());
 
-const SECRET = "segredo_jwt"; 
+const SECRET = process.env.JWT_SECRET;
 
 // [CREATE] Rota para cadastrar novos usuários (Sem Criptografia)
 app.post("/cadastro", async (req, res) => {
