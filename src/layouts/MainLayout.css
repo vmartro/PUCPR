@@ -26,6 +26,55 @@
   gap: 1.5rem;
 }
 
+/* Container da barra superior (Perfil + Botão Sair) */
+.topbar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Container que alinha a foto e o email */
+.perfil-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Estilo da foto de perfil */
+.perfil-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+/* Estilo do email/nome do usuário */
+.perfil-nome {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Botão de sair */
+.btn-logout {
+  cursor: pointer;
+  color: white;
+  background-color: #d9534f;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-logout:hover {
+  background-color: #c9302c;
+}
+
 /* Responsividade (Celular) - Sem JS */
 @media (max-width: 768px) {
   .navbar-container {

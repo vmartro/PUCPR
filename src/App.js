@@ -7,6 +7,7 @@ import Contato from './pages/Contato';
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Cadastro from './pages/Cadastro';
+import Configuracao from './pages/Configuracao';
 import './App.css';
 
 function App() {
@@ -33,10 +34,11 @@ function App() {
               </PrivateRoute>
             } 
           />
-          
+          <Route path='configuracao' element = {<Configuracao/>} />
           <Route path="sobre" element={<Sobre />} />
           <Route path="login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
+
           
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

@@ -136,3 +136,24 @@
 .btn-apagar-confirmar:hover {
   background-color: #c82333;
 }
+
+/* Espaçamento para os blocos do topo (pesquisa e botão adicionar) */
+.tarefas-bloco-topo {
+  margin-bottom: 20px;
+}
+
+/* Estilo para a mensagem de pesquisa quando não encontra resultados */
+.tarefas-pesquisa-vazia {
+  color: #666;
+  font-style: italic;
+}
+
+/* Estilo para a caixa de erro de validação do formulário */
+.form-erro-mensagem {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid #f5c6cb;
+}

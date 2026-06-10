@@ -10,9 +10,10 @@ function Tarefas() {
   const [loading, setLoading] = useState(true);
   const [termoPesquisa, setTermoPesquisa] = useState('');
   const [tarefaParaApagar, setTarefaParaApagar] = useState(null);
-  const [mostrarForm, setMostrarForm] = useState(false); 
+  const [mostrarForm, setMostrarForm] = useState(false);
   const [editandoId, setEditandoId] = useState(null);
-  const [form, setForm] = useState({ titulo: '', descricao: '', prioridade: 'media', prazo: '2026-06-03', concluida: false }); 
+  const [erroForm, setErroForm] = useState('');
+  const [form, setForm] = useState({ titulo: '', descricao: '', prioridade: 'media', prazo: '2026-06-03', concluida: false });
 
   useEffect(() => {
     async function carregar() {
@@ -31,6 +32,7 @@ function Tarefas() {
   function abrirNovo() {
     setForm({ titulo: '', descricao: '', prioridade: 'media', prazo: '2026-06-03', concluida: false });
     setEditandoId(null);
+    setErroForm('');
     setMostrarForm(true);
   }
 
@@ -47,14 +49,22 @@ function Tarefas() {
 
   async function confirmarApagar() {
     if (tarefaParaApagar !== null) {
-      await excluirTarefa(tarefaParaApagar); 
-      setTarefas(tarefas.filter(t => t.id !== tarefaParaApagar)); 
-      setTarefaParaApagar(null); 
+      await excluirTarefa(tarefaParaApagar);
+      setTarefas(tarefas.filter(t => t.id !== tarefaParaApagar));
+      setTarefaParaApagar(null);
     }
   }
 
   async function handleSalvar(e) {
     e.preventDefault();
+
+    if (!form.titulo.trim() || !form.descricao.trim()) {
+      setErroForm("Por favor, preencha o título e a descrição da tarefa.");
+      return;
+    }
+
+    setErroForm('');
+
     if (editandoId) {
       const atualizada = await atualizarTarefa(editandoId, { ...form, id: editandoId });
       setTarefas(tarefas.map(t => (t.id === editandoId ? atualizada : t)));
@@ -80,7 +90,7 @@ function Tarefas() {
       />
 
       {!mostrarForm && (
-        <div style={{ marginBottom: '20px' }}>
+        <div className="tarefas-bloco-topo">
           <input
             className="form-input"
             type="text"
@@ -92,19 +102,25 @@ function Tarefas() {
       )}
 
       {!mostrarForm && (
-        <div style={{ marginBottom: '20px' }}>
+        <div className="tarefas-bloco-topo">
           <Button variante="primario" onClick={abrirNovo}>+ Adicionar Tarefa</Button>
         </div>
       )}
 
       {mostrarForm && (
-        <form onSubmit={handleSalvar} className="form-container">
+        <form onSubmit={handleSalvar} className="form-container" noValidate>
           <h3>{editandoId ? '✏️ Editar Tarefa' : '+ Nova Tarefa'}</h3>
-          
+
+          {erroForm && (
+            <div className="form-erro-mensagem">
+              {erroForm}
+            </div>
+          )}
+
           <input className="form-input" type="text" name="titulo" placeholder="Título da tarefa" value={form.titulo} onChange={handleChange} required />
           <input className="form-input" type="text" name="descricao" placeholder="Descrição detalhada da tarefa..." value={form.descricao} onChange={handleChange} required />
           <input className="form-input" type="date" name="prazo" value={formataDataInput(form.prazo)} onChange={handleChange} required />
-          
+
           <select className="form-select" name="prioridade" value={form.prioridade} onChange={handleChange}>
             <option value="alta">Prioridade: Alta</option>
             <option value="media">Prioridade: Média</option>
@@ -128,7 +144,7 @@ function Tarefas() {
       ) : (
         <div className="tarefas-lista">
           {tarefasFiltradas.length === 0 && termoPesquisa !== '' && (
-            <p style={{ color: '#666', fontStyle: 'italic' }}>Nenhuma tarefa encontrada com "{termoPesquisa}".</p>
+            <p className="tarefas-pesquisa-vazia">Nenhuma tarefa encontrada com "{termoPesquisa}".</p>
           )}
 
           {tarefasFiltradas.map((tarefa) => (
@@ -146,7 +162,7 @@ function Tarefas() {
           ))}
         </div>
       )}
-      
+
       {tarefaParaApagar !== null && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -169,11 +185,11 @@ function Tarefas() {
 
 const formataDataInput = (dataBruta) => {
   if (!dataBruta) return '';
-  
+
   const data = new Date(dataBruta);
-  
-  if (isNaN(data.getTime())) return ''; 
-  
+
+  if (isNaN(data.getTime())) return '';
+
   return data.toISOString().substring(0, 10);
 };
 
