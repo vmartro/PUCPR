@@ -1,73 +1,88 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './Auth.css';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-
+function Login() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [erro, setErro] = useState('');
+  
   const navigate = useNavigate();
 
-  async function fazerLogin() {
+  async function handleLogin(e) {
+    e.preventDefault();
+    setErro('');
+
+    if (!email || !senha) {
+      setErro("Por favor, preencha e-mail e senha.");
+      return;
+    }
+
     try {
-      const resposta = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email,
-          senha
-        })
+      const resposta = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
       });
 
-      const dados = await resposta.json();
-
-      console.log(dados);
+      const data = await resposta.json();
 
       if (!resposta.ok) {
-        alert(dados.erro);
-        localStorage.removeItem("token");
-        return;
+        throw new Error(data.erro || "E-mail ou senha incorretos.");
       }
 
-      localStorage.setItem("token", dados.token);
+      localStorage.setItem("token", data.token);
+      window.dispatchEvent(new Event('perfilAtualizado'));
+      navigate('/');
 
-      // Redireciona após o login dar certo
-      navigate("/usuarios"); 
-
-    } catch (erro) {
-      console.log(erro);
+    } catch (err) {
+      setErro(err.message);
     }
   }
 
   return (
-    <div>
-      <h1>Login</h1>
+    <main className="auth-container">
+      <h2>Acesse sua Conta</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      {erro && <div className="auth-alerta auth-erro">{erro}</div>}
 
-      <input
-        type="password"
-        placeholder="Senha"
-        onChange={(e) => setSenha(e.target.value)}
-      />
+      <form onSubmit={handleLogin} className="auth-form" noValidate>
+        <div className="auth-grupo">
+          <label htmlFor="email">E-mail:</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Digite seu e-mail"
+            className="auth-input"
+            required
+          />
+        </div>
 
-      <button onClick={fazerLogin}>
-        Entrar
-      </button>
+        <div className="auth-grupo">
+          <label htmlFor="senha">Senha:</label>
+          <input
+            id="senha"
+            type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            placeholder="Digite sua senha"
+            className="auth-input"
+            required
+          />
+        </div>
 
-      {/* --- BOTÃO DE CADASTRO ADICIONADO AQUI --- */}
-      <br />
-      <br />
-      <button onClick={() => navigate("/cadastro")}>
-        Não tem uma conta? Cadastre-se
-      </button>
-      {/* ---------------------------------------- */}
+        <button type="submit" className="btn-auth btn-login">
+          Entrar
+        </button>
+      </form>
 
-    </div>
+      <p className="auth-rodape">
+        Ainda não tem uma conta? <Link to="/cadastro" className="link-verde">Cadastre-se aqui</Link>
+      </p>
+    </main>
   );
 }
+
+export default Login;

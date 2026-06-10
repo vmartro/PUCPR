@@ -1,0 +1,166 @@
+/* Container principal (herda o estilo de .sobre-secao) */
+.auth-container {
+  max-width: 400px;
+  margin: 60px auto;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+
+/* Título */
+.auth-container h2 {
+  margin-top: 0;
+  color: #111827;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+/* Estrutura do formulário */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Labels e Textos (herda de .sobre-secao p) */
+.auth-form label,
+.auth-rodape {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.auth-form label {
+  font-weight: bold;
+}
+
+.auth-rodape {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-rodape a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-azul { color: #0275d8; }
+.link-verde { color: #28a745; }
+
+/* Inputs (com fundo leve do seu .sobre-secao code) */
+.auth-input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  background-color: #fcfcfd;
+  color: #1f2937;
+  font-family: inherit;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+/* Botões */
+.btn-auth {
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.btn-login { background-color: #0275d8; }
+.btn-login:hover { background-color: #025aa5; }
+
+.btn-cadastro { background-color: #28a745; }
+.btn-cadastro:hover { background-color: #218838; }
+
+/* Mensagens de Alerta */
+.auth-alerta {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.auth-erro {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.auth-sucesso {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Container relativo para segurar o olhinho dentro do input */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Garante que o input ocupe 100% e deixa um espaço na direita para o ícone não sobrepor o texto */
+.input-wrapper .auth-input {
+  width: 100%;
+  padding-right: 40px; 
+  box-sizing: border-box;
+}
+/* Container relativo para segurar o botão do ícone dentro do input */
+.auth-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Input precisa de padding na direita para o texto não ficar atrás do ícone */
+.auth-input.input-with-icon {
+  padding-right: 40px; 
+  width: 100%;
+  box-sizing: border-box; /* Garante que o padding não aumente o tamanho total */
+}
+
+/* Estilo do botão transparente que segura o SVG */
+.icon-button {
+  position: absolute;
+  right: 12px; /* Distância da borda direita interna */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Define a cor padrão do ícone (cinza, herda a cor do .sobre-secao li) */
+  color: #4b5563; 
+  opacity: 0.6; /* Deixa discreto */
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.icon-button:hover {
+  opacity: 1; /* Escurece ao passar o mouse */
+  color: #111827; /* Cor do título para destacar */
+}
+
+/* Garante que o SVG tenha um tamanho fixo */
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+}
