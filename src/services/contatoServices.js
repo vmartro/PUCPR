@@ -45,10 +45,7 @@ function validarDados(dados) {
     erros.push("O nome é obrigatório.");
   }
   
-  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!regexEmail.test(dados.email)) {
-    erros.push("Insira um e-mail válido.");
-  }
+  // A validação de e-mail foi totalmente removida daqui!
   
   if (!dados.mensagem || dados.mensagem.trim().length < 10) {
     erros.push("A mensagem deve ter no mínimo 10 caracteres.");

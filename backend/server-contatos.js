@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const db = require("./db"); // Importa a conexão com o MySQL`
-require("dotenv").config()
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -20,26 +19,48 @@ const verificarToken = (req, res, next) => {
     next(); 
   });
 };
-
 app.post("/api/contato", verificarToken, async (req, res) => {
-  const { nome, email, mensagem } = req.body;
+  const { nome, mensagem } = req.body; 
+  
+  const emailDoUsuario = req.usuario.email; 
 
   try {
-    // Salva a mensagem fisicamente no banco de dados
-    await db.execute(
-      "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)",
-      [nome, email, mensagem]
-    );
+    const respostaApiExterna = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: "Formulario <onboarding@resend.dev>",
+        to: [process.env.EMAIL_RECEBEDOR],
+        // Aqui usamos o e-mail seguro que veio do token!
+        reply_to: emailDoUsuario, 
+        subject: `Novo Contato de: ${nome}`,
+        html: `
+          <h3>Novo Contato via Site</h3>
+          <p><strong>Nome:</strong> ${nome}</p>
+          <p><strong>E-mail (Autenticado):</strong> ${emailDoUsuario}</p>
+          <p><strong>Mensagem:</strong><br/>${mensagem.replace(/\n/g, '<br/>')}</p>
+        `
+      })
+    });
 
-    console.log(`Mensagem de ${nome} salva no banco de dados!`);
+    const dadosApi = await respostaApiExterna.json();
 
-    res.json({ sucesso: true, mensagem: "Mensagem recebida e registrada no banco!" });
+    if (!respostaApiExterna.ok) {
+      throw new Error("Falha ao processar e-mail na API Externa.");
+    }
+
+    console.log("✅ E-mail autenticado enviado! ID:", dadosApi.id);
+    res.json({ sucesso: true, mensagem: "Sua mensagem foi enviada com sucesso!" });
+
   } catch (erro) {
-    console.error("Erro ao salvar contato no banco:", erro);
-    res.status(500).json({ erro: "Erro ao processar mensagem." });
+    console.error("Erro:", erro);
+    res.status(500).json({ erro: "Erro ao tentar enviar a mensagem." });
   }
 });
 
 app.listen(3002, () => {
-  console.log("API 2 (Contatos) conectada ao MySQL na porta 3002");
+  console.log("API 2 (Contatos REST) rodando na porta 3002");
 });

@@ -100,10 +100,6 @@ function Contato() {
                 <input type="text" name="nome" value={formData.nome} onChange={handleChange} />
               </label>
               <label>
-                E-mail
-                <input type="email" name="email" value={formData.email} onChange={handleChange} />
-              </label>
-              <label>
                 Mensagem
                 <textarea name="mensagem" rows="4" value={formData.mensagem} onChange={handleChange} />
               </label>
@@ -128,7 +124,6 @@ function Contato() {
         }}>
           <h3 style={{ marginTop: 0, color: '#198754' }}>✅ Mensagem Registrada</h3>
           <p><strong>Nome:</strong> {dadosEnviados.nome}</p>
-          <p><strong>E-mail:</strong> {dadosEnviados.email}</p>
           
           <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px solid #ccc' }}>
             <strong>Conteúdo da mensagem:</strong>

@@ -58,9 +58,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.post(
   "/upload",
-  authMiddleware,            // exige JWT válido
-  upload.single("imagem"),  // nome deve bater com formData.append("imagem", file)
-  async (req, res) => {     // <-- AQUI: Adicionado o "async"
+  authMiddleware,         
+  upload.single("imagem"),  
+  async (req, res) => {    
     if (!req.file) {
       return res.status(400).json({ erro: "Nenhum arquivo recebido." });
     }
@@ -90,9 +90,10 @@ app.use((err, req, res, _next) => {
   res.status(500).json({ erro: "Erro interno." });
 });
 
-// [CREATE] Rota para cadastrar novos usuários (Sem Criptografia)
+
+// [CREATE] Rota para cadastrar novos usuários
 app.post("/cadastro", async (req, res) => {
-  const { email, senha } = req.body;
+  const { nome, email, senha } = req.body; 
 
   try {
     const [usuariosExistentes] = await db.execute(
@@ -104,10 +105,9 @@ app.post("/cadastro", async (req, res) => {
       return res.status(400).json({ erro: "Este e-mail já está em uso." });
     }
 
-    // Salva o usuário no MySQL com a senha em texto puro
     await db.execute(
-      "INSERT INTO usuarios (email, senha) VALUES (?, ?)",
-      [email, senha]
+      "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)",
+      [nome, email, senha]
     );
 
     res.status(201).json({ 
@@ -120,7 +120,6 @@ app.post("/cadastro", async (req, res) => {
     res.status(500).json({ erro: "Erro ao cadastrar usuário." });
   }
 });
-
 
 // [READ] Rota de Login (Comparação Simples)
 app.post("/login", async (req, res) => {

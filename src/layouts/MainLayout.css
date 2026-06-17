@@ -13,18 +13,6 @@
   padding: 2rem 1.5rem;
 }
 
-/* Estrutura base (Desktop) */
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 1.5rem;
-}
 
 /* Container da barra superior (Perfil + Botão Sair) */
 .topbar-container {
@@ -75,21 +63,4 @@
   background-color: #c9302c;
 }
 
-/* Responsividade (Celular) - Sem JS */
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column; /* Coloca o título em cima e links embaixo */
-    gap: 1rem; /* Espaço entre o título e os links */
-    text-align: center;
-  }
 
-  .navbar-links {
-    flex-wrap: wrap; /* Se não couber na tela, joga o link pra linha de baixo */
-    justify-content: center; /* Centraliza os botões */
-    width: 100%;
-  }
-
-  .navbar-links a {
-    padding: 0.5rem;
-  }
-}

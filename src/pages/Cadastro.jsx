@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 
-// --- Pequenos componentes SVG para os ícones simples ---
 const IconeOlho = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.763 7.623 7.632 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.642 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -18,11 +17,11 @@ const IconeOlhoFechado = () => (
 // --------------------------------------------------------
 
 function Cadastro() {
+  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
   
-  // Estados para controlar a visibilidade de cada campo de senha
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
 
@@ -36,21 +35,31 @@ function Cadastro() {
     setErro('');
     setSucesso('');
 
-    if (!email || !senha || !confirmarSenha) {
+    // Validação 1: Campos vazios
+    if (!nome || !email || !senha || !confirmarSenha) {
       setErro("Por favor, preencha todos os campos.");
       return;
     }
 
+    // Validação 2: Formato de e-mail (exige texto + @ + texto + .com/.br etc)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErro("Por favor, insira um e-mail válido (ex: seuemail@dominio.com).");
+      return;
+    }
+
+    // Validação 3: Senhas iguais
     if (senha !== confirmarSenha) {
       setErro("As senhas não coincidem. Tente novamente.");
       return;
     }
 
     try {
+      // Agora enviamos o nome também para o backend!
       const resposta = await fetch('http://localhost:3001/cadastro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, senha })
+        body: JSON.stringify({ nome, email, senha }) 
       });
 
       const data = await resposta.json();
@@ -78,6 +87,20 @@ function Cadastro() {
       {sucesso && <div className="auth-alerta auth-sucesso">{sucesso}</div>}
 
       <form onSubmit={handleCadastro} className="auth-form" noValidate>
+        
+        <div className="auth-grupo">
+          <label htmlFor="nome">Nome:</label>
+          <input
+            id="nome"
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Digite seu nome ou apelido"
+            className="auth-input"
+            required
+          />
+        </div>
+
         <div className="auth-grupo">
           <label htmlFor="email">E-mail:</label>
           <input
@@ -85,7 +108,7 @@ function Cadastro() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Digite seu e-mail"
+            placeholder="exemplo@email.com"
             className="auth-input"
             required
           />
@@ -93,20 +116,16 @@ function Cadastro() {
 
         <div className="auth-grupo">
           <label htmlFor="senha">Senha:</label>
-          {/* Container relativo */}
           <div className="auth-input-group">
             <input
               id="senha"
-              // Alterna tipo: text mostra, password esconde
               type={mostrarSenha ? "text" : "password"}
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               placeholder="Crie uma senha segura"
-              // Aplica a classe de padding na direita
               className="auth-input input-with-icon"
               required
             />
-            {/* Botão transparente do ícone */}
             <button 
               type="button" 
               className="icon-button" 

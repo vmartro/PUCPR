@@ -34,7 +34,16 @@ function App() {
               </PrivateRoute>
             } 
           />
-          <Route path='configuracao' element = {<Configuracao/>} />
+
+          <Route 
+            path="configuracao" 
+            element={
+              <PrivateRoute>
+                <Configuracao />
+              </PrivateRoute>
+            } 
+          />
+
           <Route path="sobre" element={<Sobre />} />
           <Route path="login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />

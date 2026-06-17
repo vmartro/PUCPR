@@ -1,3 +1,6 @@
+/* =========================================
+   ESTRUTURA BASE (DESKTOP)
+   ========================================= */
 .navbar {
   display: flex;
   align-items: center;
@@ -6,6 +9,13 @@
   background-color: #1f2937;
   color: #f9fafb;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Container que envolve a marca e o botão no celular */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-marca {
@@ -39,4 +49,86 @@
 .navbar-link.ativo {
   color: #ffffff;
   background-color: #2563eb;
+}
+
+/* =========================================
+   ESTILOS DO MENU HAMBÚRGUER
+   ========================================= */
+
+/* Escondido por padrão no computador */
+.menu-hamburguer {
+  display: none; 
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* As 3 linhas brancas do hambúrguer */
+.menu-hamburguer .linha {
+  width: 100%;
+  height: 3px;
+  background-color: #f9fafb;
+  border-radius: 5px;
+  transition: all 0.3s linear;
+  transform-origin: 1px;
+}
+
+/* Animação do 'X' quando aberto */
+.menu-hamburguer .linha.aberto:nth-child(1) {
+  transform: rotate(45deg);
+}
+.menu-hamburguer .linha.aberto:nth-child(2) {
+  opacity: 0;
+}
+.menu-hamburguer .linha.aberto:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* =========================================
+   RESPONSIVIDADE (MOBILE)
+   ========================================= */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+    align-items: stretch; /* Estica para preencher a tela toda */
+  }
+
+  .navbar-container {
+    width: 100%; /* Força o título para esquerda e botão para direita */
+  }
+
+  .menu-hamburguer {
+    display: flex;
+  }
+
+  .navbar-links {
+    display: none; /* Esconde os links por padrão */
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    margin-top: 1rem;
+  }
+
+  /* Quando o React adiciona a classe ativo, a lista aparece */
+  .navbar-links.ativo {
+    display: flex;
+  }
+
+  .navbar-links li {
+    width: 100%;
+  }
+
+  .navbar-link {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0; 
+    border-top: 1px solid #374151; /* Cria uma divisória entre os itens */
+  }
 }
